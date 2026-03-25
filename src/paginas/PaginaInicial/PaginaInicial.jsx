@@ -6,20 +6,21 @@ import { useNavigate } from 'react-router-dom';
 function PaginaInicial() {
   const navigate = useNavigate();
 
-
-
-
   return (
-  <Principal>
-    <BotaoCustomizado tipo="primario" aoClicar={() => navigate('/lista-produtos')}>
-      Lista de Produtos
+    <Principal>
+      <BotaoCustomizado tipo="primario" aoClicar={() => navigate('/lista-produtos')}>
+        Lista de Produtos
       </BotaoCustomizado>
 
-    <BotaoCustomizado tipo="segundario" aoClicar={() => navigate('/blabla')}>
-      Rota invalidada
+      <BotaoCustomizado tipo="secundario" aoClicar={() => navigate('/lista-tarefas')}>
+        Lista de Tarefas
       </BotaoCustomizado>
-      
-  </Principal>
+
+      <BotaoCustomizado aoClicar={() => navigate('/blabla')}>
+        Rota invalidada
+      </BotaoCustomizado>
+
+    </Principal>
   );
 }
 

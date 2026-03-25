@@ -7,8 +7,8 @@ function BotaoCustomizado({ tipo, aoClicar, children }) {
         case "primario":
             classes += " botao-customizado__primario";
             break;
-        case "segundario":
-            classes += " botao-customizado__segundario";
+        case "secundario":
+            classes += " botao-customizado__secundario";
             break;
     }
     return <button className={classes} onClick={aoClicar}>
