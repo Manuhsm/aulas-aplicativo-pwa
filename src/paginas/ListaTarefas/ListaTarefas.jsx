@@ -7,9 +7,16 @@ function ListaTarefas() {
     <Principal>
             <h2>Lista de Tarefas</h2>
 
-            <input type="text" placeholder="Nova Tarefa" value={novaTarefa} onChange={(event)=> {}}/>
+        <input
+        type="text"
+        placeholder="Nova Tarefa"
+        value={novaTarefa}
+        onChange={(event) => setNovaTarefa(event.target.value)}
+      />
+
+      <CampoCustomizado />
     </Principal>
     );
 }
 
-export default ListaTarefas
+export default ListaTarefas;
