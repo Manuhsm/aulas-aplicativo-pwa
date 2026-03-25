@@ -1,4 +1,6 @@
 import "./ListaProdutos.css";
+import Principal from "../../componentes/Principal/Principal";
+import ItemProduto from "./ItemProduto";
 
 function ListaProdutos() {
   const produtos = [
@@ -19,7 +21,15 @@ function ListaProdutos() {
  },
 ];
 
-  return <h2>Lista de Produtos</h2>
- }
+ return (
+    <Principal>
+      <h2>Lista de Produtos</h2>
+
+      {produtos.map((itemProduto, index) => {
+        return <ItemProduto key={index} produto={itemProduto} />;
+      })}
+    </Principal>
+  );
+}
 
 export default ListaProdutos;
