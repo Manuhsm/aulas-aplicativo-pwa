@@ -1,11 +1,12 @@
 import "./CampoCustomizado.css";
 
-function CampoCustomizado(){
-    return (
-    <div>
-        <input type="text" placeholder="Campo Customizado" />
+function CampoCustomizado({ label, ...props }) {
+  return (
+    <div className="campo-customizado__root">
+      <label>{label}</label>
+      <input className="campo-customizado__input" {...props} />
     </div>
-    );
+  );
 }
 
 export default CampoCustomizado;
