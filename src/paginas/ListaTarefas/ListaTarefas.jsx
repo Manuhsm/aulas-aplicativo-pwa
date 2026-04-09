@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
 import "./ListaTarefas.css";
-import { FaTrashAlt } from "react-icons/fa";
 
 function ListaTarefas() {
   const [novaTarefa, setNovaTarefa] = useState("");
@@ -31,10 +31,8 @@ function ListaTarefas() {
       setTarefas([...tarefas]); 
   };
   return (
-    <Principal>
-      <h2>Lista de Tarefas ({tarefas.length})</h2>
+    <Principal voltarPara="/" titulo={`Lista de Tarefas (${tarefas.length})`}>
 
-      <div className="lista-tarefas__campo-adicionar">
         <BotaoCustomizado
           label="Nova Tarefa"
 
@@ -54,7 +52,7 @@ function ListaTarefas() {
           }}
         />
 
-      </div>
+     
 
       {!tarefas.length && (<span className="lista-tarefas__mensagem-sem-tarefas">Não há tarefas para mostrar</span>)}
 

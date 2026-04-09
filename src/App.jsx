@@ -5,6 +5,7 @@ import Rodape from "./componentes/Rodape/Rodape";
 import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
 import ListaProdutos from "./paginas/ListaProdutos/ListaProdutos";
 import ListaTarefas from "./paginas/ListaTarefas/ListaTarefas";
+import CadastroCliente from "./paginas/CadastroCliente/CadastroCliente";
 
 const router = createBrowserRouter([
  {
@@ -21,6 +22,15 @@ const router = createBrowserRouter([
         element: <ListaTarefas />,
   },
 
+  {
+        path: 'cadastro-cliente',
+        element: <CadastroCliente />,
+  },
+  
+  {
+    path: "*",
+    element: <h3>Página não encontrada!!</h3>,
+  },
 
 ]);
 
