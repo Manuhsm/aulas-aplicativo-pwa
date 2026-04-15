@@ -5,9 +5,13 @@ import { useState } from "react";
 import { validarCPF } from "../../utils/validarCPF";
 import {formatarComMascara, Mascara_CPF, Mascara_Celular } from "../../utils/formatarComMascara";
 import validarEmail from "../../utils/validarEmail"; 
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 function CadastroCliente() {
+  const navigate = useNavigate();
+
   const [cliente, setCliente] = useState({
     nome: "",
     cpf: "",
@@ -18,11 +22,34 @@ function CadastroCliente() {
   });
 
   const salvar = () => {
-    console.log("Cliente salvo:", cliente);
-  }
+    if (!cliente.nome.trim() || !cliente.cpf.trim()) {
+      toast.error("O campo Nome e CPF são obrigatórios!");
+      return;
+    }
 
-  return (
-    <Principal titulo="Novo Cliente">
+    if (!validarCPF(cliente.cpf.trim())) {
+      toast.error("CPF inválido!");
+      return;
+    }
+
+    if (cliente.email.trim() && !validarEmail(cliente.email.trim())) {
+      toast.error("Email inválido!");
+      return;
+    }
+
+    const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    const novoCliente = { id: crypto.randomUUID(), ...cliente };
+    clientesDoLocalStorage.push(novoCliente);
+    localStorage.setItem("clientes", JSON.stringify(clientesDoLocalStorage));
+
+    setCliente(novoCliente);
+    toast.success("Cliente salvo com sucesso!");
+      navigate("/lista-clientes");
+  }
+    const titulo = cliente.id ? "Editar Cliente" : "Novo Cliente";
+  return(
+   <Principal titulo= {titulo} voltarPara="/lista-clientes">
 
       <CampoCustomizado
         label="Nome"
@@ -36,35 +63,34 @@ function CadastroCliente() {
         }
           onBlur={(e)=>{
         if (!validarCPF(e.target.value.trim())) {
-          alert("CPF inválido!");
+          toast.error("CPF inválido!");
         }
       }}
       />
-      <CampoCustomizado 
+       <CampoCustomizado
         type="date"
-        label="Data Nascimento" 
+        label="Data Nascimento"
         value={cliente.dataNascimento}
         onChange={(e) => setCliente({ ...cliente, dataNascimento: e.target.value })}
       />
-      <CampoCustomizado 
-        type="tel" 
-        label="Celular" 
+        <CampoCustomizado
+        type="tel"
+        label="Celular"
         value={cliente.celular}
-        onChange={(e) => setCliente({ ...cliente, celular: formatarComMascara(e.target.value, Mascara_Celular) })}
-    
+        onChange={(e) =>
+          setCliente({ ...cliente, celular: formatarComMascara(e.target.value, Mascara_Celular) })
+        }
       />
-      <CampoCustomizado 
-        type="email" 
-        label="Email" 
+      <CampoCustomizado
+        type="email"
+        label="Email"
         value={cliente.email}
-        onChange={(e) => 
-          setCliente({ ...cliente, email: e.target.value }) }
+        onChange={(e) => setCliente({ ...cliente, email: e.target.value })}
         onBlur={(e) => {
           if (e.target.value.trim() && !validarEmail(e.target.value)) {
-            alert("Email inválido!");
-          }     
-        }
-      }
+            toast.error("Email inválido!");
+          }
+        }}
       />
 
       <CampoCustomizado
@@ -81,8 +107,17 @@ function CadastroCliente() {
             reader.readAsDataURL(imagem);
           }
         }}
-
       />
+
+      {cliente.foto && (
+        <div style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
+          <img
+            src={cliente.foto}
+            alt="Foto do Cliente"
+            style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "8px" }}
+          />
+        </div>
+      )}  
 
       <BotaoCustomizado tipo="primario" aoClicar={salvar} >
         Salvar
